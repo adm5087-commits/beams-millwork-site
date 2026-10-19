@@ -1,0 +1,19 @@
+{
+  "name": "beams-millwork-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@fontsource/public-sans": "5.0.18",
+    "@fontsource/spectral": "5.0.13",
+    "next": "14.2.35",
+    "pdf-lib": "1.17.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "resend": "4.0.0"
+  }
+}
