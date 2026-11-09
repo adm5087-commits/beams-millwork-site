@@ -83,9 +83,7 @@ export default function ContactForm() {
         <p className="notice error" role="alert">{state.message}</p>
       )}
       <div className="field full">
-        <button className="btn" type="submit" disabled={state.status === "sending"}>
-          {state.status === "sending" ? "Sending..." : "Send project details"}
-        </button>
+        <button className="btn" type="submit" disabled={state.status === "sending"}><span>{state.status === "sending" ? "Sending..." : "Send project details"}</span></button>
       </div>
     </form>
   );

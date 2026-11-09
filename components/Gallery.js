@@ -49,6 +49,7 @@ export default function Gallery({ items, categories }) {
           <li key={item.src}>
             <button onClick={() => setIndex(i)} aria-label={`View larger: ${item.alt}`}>
               <Photo src={item.src} alt={item.alt} fill sizes="(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+              <span className="tile-cap">{item.alt}</span>
             </button>
           </li>
         ))}

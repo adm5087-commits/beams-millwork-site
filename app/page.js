@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Photo from "@/components/Photo";
 import ProfileDrawing from "@/components/ProfileDrawing";
+import VideoFeature from "@/components/VideoFeature";
+import { youtubeId } from "@/lib/youtube";
 import { getGallery, getHero } from "@/lib/gallery";
-import { site, process, services } from "@/lib/site";
+import { site, process, services, featuredVideo } from "@/lib/site";
 
 export default function Home() {
   const hero = getHero();
@@ -25,19 +27,28 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <section className="hero">
-        <div className="hero-copy">
-          <h1>Architectural millwork, drawn, built and installed by one shop.</h1>
-          <p className="lede">
-            For more than 20 years Beam&rsquo;s has built custom casework, millwork and mouldings for homes and commercial
-            projects from our shop in Morgantown, Pennsylvania.
+        <div className="hero-media">
+          <Photo src={hero.src} alt={hero.alt} fill priority sizes="100vw" />
+        </div>
+        <div className="hero-shade" aria-hidden="true" />
+        <div className="wrap hero-copy">
+          <h1>Fine millwork, made for the room it lives in.</h1>
+          <p className="hero-lede">
+            Custom casework, paneling and mouldings, drawn, built and installed by one shop in Morgantown, Pennsylvania.
           </p>
           <div className="actions">
-            <Link className="btn" href="/contact">Request a bid</Link>
-            <Link className="btn ghost" href="/work">See our work</Link>
+            <Link className="btn light" href="/contact"><span>Request a bid</span></Link>
+            <Link className="btn outline-light" href="/work"><span>View our work</span></Link>
           </div>
         </div>
-        <div className="hero-media">
-          <Photo src={hero.src} alt={hero.alt} fill priority sizes="(max-width: 900px) 100vw, 60vw" />
+      </section>
+
+      <section className="section statement">
+        <div className="wrap">
+          <p>
+            Every piece we make begins as a drawing and ends as part of the architecture. For more than twenty years, the
+            same team has carried that work from the first sketch to the final scribe.
+          </p>
         </div>
       </section>
 
@@ -78,6 +89,24 @@ export default function Home() {
         </div>
       </section>
 
+      {youtubeId(featuredVideo.url) && (
+        <section className="section dark featured-film">
+          <div className="wrap">
+            <div className="film-head">
+              <div>
+                <p className="film-kicker">{featuredVideo.location}</p>
+                <h2>{featuredVideo.title}</h2>
+              </div>
+              <div>
+                <p className="lede">{featuredVideo.text}</p>
+                <Link href="/work/commercial" className="text-link light">View commercial work</Link>
+              </div>
+            </div>
+            <VideoFeature url={featuredVideo.url} title={featuredVideo.title} />
+          </div>
+        </section>
+      )}
+
       {featured.length >= 3 && (
         <section className="section">
           <div className="wrap">
@@ -89,6 +118,7 @@ export default function Home() {
               {featured.map((f, i) => (
                 <Link href="/work" className="tile" key={f.src}>
                   <Photo src={f.src} alt={f.alt} fill sizes={i === 0 ? "(max-width: 700px) 100vw, 66vw" : "(max-width: 700px) 50vw, 33vw"} />
+                  <span className="tile-cap">{f.alt}</span>
                 </Link>
               ))}
             </div>
@@ -98,13 +128,11 @@ export default function Home() {
 
       <section className="section dark">
         <div className="wrap cta">
-          <div>
-            <h2>Have drawings ready?</h2>
-            <p className="lede">Send plans, specs or a few photos and we&rsquo;ll follow up within one business day.</p>
-          </div>
+          <h2>Bring us your drawings.</h2>
+          <p className="lede">Send plans, specifications or a few photographs. We respond within one business day.</p>
           <div className="actions">
-            <Link className="btn" href="/contact">Request a bid</Link>
-            <a className="btn ghost" href={site.phoneHref}>Call {site.phone}</a>
+            <Link className="btn light" href="/contact"><span>Request a bid</span></Link>
+            <a className="btn outline-light" href={site.phoneHref}><span>Call {site.phone}</span></a>
           </div>
         </div>
       </section>

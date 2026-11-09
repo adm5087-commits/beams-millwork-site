@@ -7,8 +7,8 @@ const nextConfig = {
   async redirects() {
     return [
       { source: "/portfolio", destination: "/work", permanent: true },
-      { source: "/residential", destination: "/work", permanent: true },
-      { source: "/commercial", destination: "/work", permanent: true },
+      { source: "/residential", destination: "/work/residential", permanent: true },
+      { source: "/commercial", destination: "/work/commercial", permanent: true },
       { source: "/project-videos-1", destination: "/work", permanent: true },
       { source: "/join-our-team", destination: "/careers", permanent: true },
       { source: "/privacy-policy", destination: "/privacy", permanent: true },

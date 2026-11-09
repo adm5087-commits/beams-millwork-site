@@ -166,8 +166,25 @@ export default function ApplicationForm({ positions }) {
             </select>
           </div>
           <Field label="Employment type" name="employmentType" as="select" required options={["Full time", "Part time", "Either"]} />
-          <Field label="Desired pay" name="pay" required inputMode="decimal" placeholder="e.g. 28 or 65,000" hint="What you&rsquo;re looking for in this role." />
-          <Field label="Pay basis" name="payUnit" as="select" required options={["Per hour", "Per year"]} />
+          <div className="field">
+            <Label htmlFor="f-pay" label="Desired pay" required />
+            <div className="money">
+              <span aria-hidden="true">$</span>
+              <input
+                id="f-pay"
+                name="pay"
+                required
+                inputMode="decimal"
+                autoComplete="off"
+                pattern="[0-9][0-9,]*(\.[0-9]{1,2})?"
+                title="Numbers only, like 28 or 65,000"
+                onInput={(e) => {
+                  e.currentTarget.value = e.currentTarget.value.replace(/[^0-9.,]/g, "").replace(/(\..*)\./g, "$1");
+                }}
+              />
+            </div>
+            <span className="hint">Numbers only, like 28 or 65,000. An hourly rate or an annual salary.</span>
+          </div>
           <Field label="Earliest start date" name="start" required placeholder="e.g. Nov 15 or two weeks notice" />
           <Field label="How did you hear about us?" name="heard" as="select" options={["Indeed", "Facebook", "Referred by an employee", "Our website", "School or job fair", "Other"]} />
           <Field label="Referred by" name="referredBy" hint="If someone referred you." />
@@ -247,7 +264,7 @@ export default function ApplicationForm({ positions }) {
             </div>
           ))}
         {!noHistory && jobs < 4 && (
-          <button type="button" className="btn ghost small" onClick={() => setJobs(jobs + 1)}>Add another employer</button>
+          <button type="button" className="btn ghost small" onClick={() => setJobs(jobs + 1)}><span>Add another employer</span></button>
         )}
       </fieldset>
 
@@ -270,7 +287,7 @@ export default function ApplicationForm({ positions }) {
           </div>
         ))}
         {schools < 3 && (
-          <button type="button" className="btn ghost small" onClick={() => setSchools(schools + 1)}>Add another school</button>
+          <button type="button" className="btn ghost small" onClick={() => setSchools(schools + 1)}><span>Add another school</span></button>
         )}
 
         <div className="repeat">
@@ -358,16 +375,14 @@ export default function ApplicationForm({ positions }) {
 
       <div className="step-nav">
         {step > 0 ? (
-          <button type="button" className="btn ghost" onClick={() => go(step - 1)}>Back</button>
+          <button type="button" className="btn ghost" onClick={() => go(step - 1)}><span>Back</span></button>
         ) : (
           <span />
         )}
         {step < STEPS.length - 1 ? (
-          <button type="button" className="btn" onClick={() => go(step + 1)}>Next: {STEPS[step + 1]}</button>
+          <button type="button" className="btn" onClick={() => go(step + 1)}><span>Next: {STEPS[step + 1]}</span></button>
         ) : (
-          <button type="submit" className="btn" disabled={state.status === "sending"}>
-            {state.status === "sending" ? "Submitting application..." : "Submit application"}
-          </button>
+          <button type="submit" className="btn" disabled={state.status === "sending"}><span>{state.status === "sending" ? "Submitting application..." : "Submit application"}</span></button>
         )}
       </div>
     </form>

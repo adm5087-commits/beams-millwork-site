@@ -1,28 +1,39 @@
 import Link from "next/link";
-import Gallery from "@/components/Gallery";
+import Photo from "@/components/Photo";
 import { categories, getGallery } from "@/lib/gallery";
 
 export const metadata = {
   title: "Our work",
-  description: "Residential, commercial and institutional millwork and casework projects by Beam\u2019s Millwork.",
+  description: "Residential and commercial millwork projects by Beam\u2019s Millwork.",
 };
 
 export default function WorkPage() {
-  const items = getGallery();
+  const all = getGallery();
   return (
-    <section className="section" style={{ paddingTop: 0 }}>
+    <>
       <div className="page-head">
         <div className="wrap">
           <h1>Our work</h1>
-          <p className="lede">Casework, paneling, mouldings and fixtures from recent residential and commercial projects.</p>
+          <p className="lede">Two galleries, one standard. Choose a collection to explore.</p>
         </div>
       </div>
-      <div className="wrap">
-        <Gallery items={items} categories={categories} />
-        <p className="after-gallery">
-          Want to see something similar for your project? <Link href="/contact">Send us your drawings</Link>.
-        </p>
-      </div>
-    </section>
+      <section className="work-split">
+        {categories.map((c, i) => {
+          const items = getGallery(c.key);
+          const cover = items[0] || all[i] || all[0];
+          return (
+            <Link key={c.key} href={`/work/${c.key}`} className="work-panel">
+              <Photo src={cover.src} alt="" fill sizes="(max-width: 860px) 100vw, 50vw" />
+              <span className="work-panel-shade" aria-hidden="true" />
+              <span className="work-panel-copy">
+                <span className="work-panel-title">{c.label}</span>
+                <span className="work-panel-intro">{c.intro}</span>
+                <span className="work-panel-cta">View the gallery</span>
+              </span>
+            </Link>
+          );
+        })}
+      </section>
+    </>
   );
 }

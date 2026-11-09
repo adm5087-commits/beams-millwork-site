@@ -1,14 +1,19 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
 
-export default function Footer() {
+export default function Footer({ logo }) {
   const a = site.address;
   return (
     <footer className="site-footer">
       <div className="wrap">
         <div className="footer-grid">
           <div>
-            <h2>Beam&rsquo;s Millwork</h2>
+            {logo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={logo} alt="Beam&rsquo;s Millwork" className="footer-logo" />
+            ) : (
+              <h2>Beam&rsquo;s Millwork</h2>
+            )}
             <p>Architectural millwork, casework and mouldings, built in Morgantown, Pennsylvania.</p>
           </div>
           <div>
@@ -39,7 +44,9 @@ export default function Footer() {
           <div>
             <h3>Site</h3>
             <ul>
-              <li><Link href="/work">Our work</Link></li>
+              <li><Link href="/">Home</Link></li>
+              <li><Link href="/work/residential">Residential work</Link></li>
+              <li><Link href="/work/commercial">Commercial work</Link></li>
               <li><Link href="/capabilities">Capabilities</Link></li>
               <li><Link href="/careers">Careers</Link></li>
               <li><Link href="/contact">Request a bid</Link></li>

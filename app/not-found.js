@@ -7,8 +7,8 @@ export default function NotFound() {
         <h1>Page not found</h1>
         <p className="lede">That page moved or no longer exists.</p>
         <div className="actions">
-          <Link className="btn" href="/">Go to the home page</Link>
-          <Link className="btn ghost" href="/work">See our work</Link>
+          <Link className="btn" href="/"><span>Go to the home page</span></Link>
+          <Link className="btn ghost" href="/work"><span>See our work</span></Link>
         </div>
       </div>
     </section>

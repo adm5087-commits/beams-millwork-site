@@ -3,10 +3,11 @@ import { positions } from "@/lib/site";
 
 export const metadata = {
   title: "Careers",
-  description: "Join the team at Beam\u2019s Millwork in Morgantown, PA. Open positions in estimating, drafting and the shop.",
+  description: "Join the team at Beam\u2019s Millwork in Morgantown, PA. Estimating, project management, drafting, shop and sales roles.",
 };
 
 export default function CareersPage() {
+  const roles = [...positions].sort((a, b) => Number(!!b.hiring) - Number(!!a.hiring));
   return (
     <>
       <div className="page-head">
@@ -21,18 +22,22 @@ export default function CareersPage() {
 
       <section className="section">
         <div className="wrap">
-          <h2>Open positions</h2>
+          <div className="section-head">
+            <h2>Positions</h2>
+          </div>
+          <p className="lede">We accept applications for every role year-round. Roles marked hiring now are being actively filled.</p>
           <ul className="positions">
-            {positions.map((p) => (
+            {roles.map((p) => (
               <li key={p.title}>
                 <div>
-                  <h3>{p.title}</h3>
+                  <h3>
+                    {p.title}
+                    {p.hiring && <span className="hiring-tag">Hiring now</span>}
+                  </h3>
                   <p className="meta">{p.type}, Morgantown, PA</p>
                   <p>{p.text}</p>
                 </div>
-                <a className="btn ghost" href={`?position=${encodeURIComponent(p.title)}#apply`}>
-                  Apply for {p.title.toLowerCase()}
-                </a>
+                <a className="btn ghost" href={`?position=${encodeURIComponent(p.title)}#apply`}><span>Apply</span></a>
               </li>
             ))}
           </ul>
@@ -44,7 +49,7 @@ export default function CareersPage() {
         <div className="wrap">
           <h2>Apply</h2>
           <p className="lede">This is our full employment application. It takes about 15 minutes. Have your work history and two professional references handy.</p>
-          <ApplicationForm positions={positions} />
+          <ApplicationForm positions={roles} />
         </div>
       </section>
     </>
