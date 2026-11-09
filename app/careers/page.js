@@ -48,7 +48,7 @@ export default function CareersPage() {
       <section className="section tint" id="apply">
         <div className="wrap">
           <h2>Apply</h2>
-          <p className="lede">This is our full employment application. It takes about 15 minutes. Have your work history and two professional references handy.</p>
+          <p className="lede">This is our full employment application. It takes about 15 minutes. Have your work history handy.</p>
           <ApplicationForm positions={roles} />
         </div>
       </section>

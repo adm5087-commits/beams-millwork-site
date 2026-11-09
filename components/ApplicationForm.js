@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useFormSubmit } from "./useFormSubmit";
 
 const STEPS = ["Position", "Contact info", "Eligibility", "Work history", "Education and skills", "References", "Resume and signature"];
-const SOFTWARE = ["Microvellum", "AutoCAD", "Cabinet Vision", "SolidWorks", "SketchUp", "Excel", "Estimating software"];
+const SOFTWARE = ["Microvellum", "AutoCAD", "Cabinet Vision", "2020", "ShopPak", "ProjectPak", "SolidWorks", "SketchUp", "Excel", "Estimating software"];
 const MACHINES = ["Table saw", "Panel saw", "Edgebander", "CNC router", "Moulder", "Shaper", "Wide belt sander", "Spray finishing", "Field installation"];
 const EDU_LEVELS = ["Some high school", "High school diploma or GED", "Trade or vocational certificate", "Some college", "Associate degree", "Bachelor\u2019s degree", "Graduate degree"];
 
@@ -300,7 +300,9 @@ export default function ApplicationForm({ positions }) {
               options={["None", "Less than 1 year", "1 to 3 years", "3 to 5 years", "5 to 10 years", "10+ years"]}
             />
             <Checks label="Software you&rsquo;ve used" name="software" options={SOFTWARE} />
+            <Field label="Other software" name="softwareOther" full placeholder="List any other programs you&rsquo;ve used" />
             <Checks label="Machinery and processes you&rsquo;ve run" name="machines" options={MACHINES} />
+            <Field label="Other machinery or processes" name="machinesOther" full placeholder="List any other equipment you&rsquo;ve run" />
             <Field label="Certifications and licenses" name="certs" full placeholder="e.g. Forklift, OSHA 10, AWI training" />
             <Field label="Other skills" name="skills" as="textarea" full rows={3} />
             <Field label="Military training relevant to this job" name="military" as="textarea" full rows={2} hint="Optional." />
@@ -311,16 +313,16 @@ export default function ApplicationForm({ positions }) {
       {/* 6. References */}
       <fieldset {...panel(5)}>
         <legend>References</legend>
-        <p className="step-intro">Professional references only, not relatives. Two are required.</p>
+        <p className="step-intro">Optional. Professional references only, not relatives.</p>
         {[0, 1, 2].map((i) => (
           <div className="repeat" key={i}>
-            <RepeatHead title={`Reference ${i + 1}${i === 2 ? " (optional)" : ""}`} />
+            <RepeatHead title={`Reference ${i + 1}`} />
             <div className="form-grid">
-              <Field label="Name" name={`ref${i}_name`} required={i < 2} />
-              <Field label="Relationship" name={`ref${i}_relationship`} required={i < 2} placeholder="e.g. Former supervisor" />
+              <Field label="Name" name={`ref${i}_name`} autoComplete="off" />
+              <Field label="Relationship" name={`ref${i}_relationship`} placeholder="e.g. Former supervisor" />
               <Field label="Company" name={`ref${i}_company`} />
-              <Field label="Phone" name={`ref${i}_phone`} type="tel" required={i < 2} />
-              <Field label="Email" name={`ref${i}_email`} type="email" />
+              <Field label="Phone" name={`ref${i}_phone`} type="tel" autoComplete="off" />
+              <Field label="Email" name={`ref${i}_email`} type="email" autoComplete="off" />
               <Field label="Years known" name={`ref${i}_years`} inputMode="numeric" />
             </div>
           </div>
@@ -349,7 +351,7 @@ export default function ApplicationForm({ positions }) {
             </label>
             <label>
               <input type="checkbox" name="ackContact" required />
-              <span>I authorize Beam&rsquo;s Millwork to contact my previous employers (except those I marked not to contact) and the references listed to verify the information I provided.</span>
+              <span>I authorize Beam&rsquo;s Millwork to contact my previous employers (except those I marked not to contact) and any references I listed to verify the information I provided.</span>
             </label>
             <label>
               <input type="checkbox" name="ackAtWill" required />
@@ -380,7 +382,7 @@ export default function ApplicationForm({ positions }) {
           <span />
         )}
         {step < STEPS.length - 1 ? (
-          <button type="button" className="btn" onClick={() => go(step + 1)}><span>Next: {STEPS[step + 1]}</span></button>
+          <button type="button" className="btn" onClick={() => go(step + 1)}><span>Next<span className="next-name">: {STEPS[step + 1]}</span></span></button>
         ) : (
           <button type="submit" className="btn" disabled={state.status === "sending"}><span>{state.status === "sending" ? "Submitting application..." : "Submit application"}</span></button>
         )}
